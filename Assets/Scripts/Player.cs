@@ -5,7 +5,6 @@ using System.Collections;
 public class Player : MonoBehaviour {
     public int playerID;
 
-
     public int healthMax;
     public int health;
     public Image healthImage;
@@ -14,14 +13,18 @@ public class Player : MonoBehaviour {
     public bool canAttack;
     public Vector3 position;
     public Monster target;
-	// Use this for initialization
-	void Start () {
+
+    public bool isAdvanced;
+    public Vector3 firstPosition;
+
+    // Use this for initialization
+    void Start () {
         canAttack = true;
         healthMax = 40;
         stamina = 40;
         health = healthMax;
         healthImage = GameObject.Find("HealthFull" + (playerID + 1)).GetComponent<Image>();
-        
+        firstPosition = transform.position;
 	}
 	
 	// Update is called once per frame
