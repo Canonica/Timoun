@@ -12,6 +12,8 @@ public class TurnManager : MonoBehaviour {
     public bool isPlaying;
 
     public int whoPlays;
+
+    public Text textTurn;
     public static TurnManager GetInstance()
     {
         return instance;
@@ -25,6 +27,7 @@ public class TurnManager : MonoBehaviour {
         currentTimeTurn = maxTimeTurn;
         isPlaying = false;
         whoPlays = 0;
+        textTurn.text = "Player Turn";
     }
 
     void Update()
@@ -50,9 +53,11 @@ public class TurnManager : MonoBehaviour {
         if(whoPlays == 0)
         {
             whoPlays = 1;
+            textTurn.text = "Monster Turn";
         }else if (whoPlays == 1)
         {
             whoPlays = 0;
+            textTurn.text = "Player Turn";
         }
     }
 

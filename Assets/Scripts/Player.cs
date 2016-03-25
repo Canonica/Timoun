@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using DG.Tweening;
 
 public class Player : MonoBehaviour {
     public int playerID;
@@ -30,6 +31,14 @@ public class Player : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         healthImage.fillAmount = (float)((float)health / (float)healthMax);
+        //if (Input.GetKey(KeyCode.A))
+        //{
+        //    transform.DOMove(GameObject.Find("Advanced").transform.position, 0.5f);
+        //}
+        //if (Input.GetKey(KeyCode.B))
+        //{
+        //    transform.DOMove(firstPosition, 0.5f);
+        //}
     }
 
     IEnumerator skillCD(int cdBetween)
@@ -51,5 +60,17 @@ public class Player : MonoBehaviour {
     void Dead()
     {
         Debug.Log(playerID + " is dead");
+    }
+
+    public void Advance()
+    {
+        isAdvanced = true;
+        transform.DOMove(GameObject.Find("Advanced").transform.position, 0.5f);
+    }
+
+    public void Back()
+    {
+        isAdvanced = false;
+        transform.DOMove(firstPosition, 0.5f);
     }
 }
