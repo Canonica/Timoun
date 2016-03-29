@@ -14,6 +14,8 @@ public class TurnManager : MonoBehaviour {
     public int whoPlays;
 
     public Text textTurn;
+    public PlayerManager allPlayers;
+
     public static TurnManager GetInstance()
     {
         return instance;
@@ -54,7 +56,9 @@ public class TurnManager : MonoBehaviour {
         {
             whoPlays = 1;
             textTurn.text = "Monster Turn";
-        }else if (whoPlays == 1)
+            allPlayers.allBack();
+        }
+        else if (whoPlays == 1)
         {
             whoPlays = 0;
             textTurn.text = "Player Turn";
