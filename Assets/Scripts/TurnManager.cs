@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
-
+using DG.Tweening;
 public class TurnManager : MonoBehaviour {
 
     private static TurnManager instance = null;
@@ -57,12 +57,14 @@ public class TurnManager : MonoBehaviour {
             whoPlays = 1;
             textTurn.text = "Monster Turn";
             allPlayers.allBack();
+            allPlayers.advancedPlayer = null;
         }
         else if (whoPlays == 1)
         {
             whoPlays = 0;
             textTurn.text = "Player Turn";
         }
+        textTurn.transform.DOShakePosition(0.1f, 10);
     }
 
     public IEnumerator WaitForCdfloat(float cdTimer)

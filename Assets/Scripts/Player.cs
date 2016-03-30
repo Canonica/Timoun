@@ -10,7 +10,11 @@ public class Player : MonoBehaviour {
     public int health;
     public Image healthImage;
 
+    public int staminaMax;
     public int stamina;
+    public Image staminaImage;
+
+
     public bool canRegenStamina;
     public bool canAttack;
     public Vector3 position;
@@ -26,19 +30,20 @@ public class Player : MonoBehaviour {
     void Start () {
         canAttack = true;
         healthMax = 40;
-        stamina = 40;
+        staminaMax = 40;
+        stamina = staminaMax;
         health = healthMax;
         healthImage = GameObject.Find("HealthFull" + (playerID + 1)).GetComponent<Image>();
+        staminaImage = GameObject.Find("StaminaFull" + (playerID + 1)).GetComponent<Image>();
         firstPosition = transform.position;
         StartCoroutine(reloadStamina());
         impossibleActionText.DOFade(0, 0f);
-
     }
 	
 	// Update is called once per frame
 	void Update () {
         healthImage.fillAmount = (float)((float)health / (float)healthMax);
-        
+        staminaImage.fillAmount = (float)((float)stamina / (float)staminaMax);
     }
 
     public void getDamage(int damage)
@@ -75,13 +80,15 @@ public class Player : MonoBehaviour {
             stamina -= cost;
             Debug.Log("Attack");
             target.GetDamage(damage);
+            target.transform.DOShakePosition(0.5f, 0.5f, 10, 90);
             yield return new WaitForSeconds(cooldown);
             canAttack = true;
         }
         else
         {
-            impossibleActionText.DOFade(1, 0.2f);
-            impossibleActionText.DOFade(0, 0.5f);
+            impossibleActionText.transform.DOShakeScale(0.1f, 10);
+            impossibleActionText.DOFade(1, 0.2f).OnComplete(() => impossibleActionText.DOFade(0, 0.5f));
+            //impossibleActionText.DOFade(0, 0.5f);
             yield break;
         }
         
