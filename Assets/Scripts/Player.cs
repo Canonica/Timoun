@@ -19,12 +19,26 @@ public class Player : MonoBehaviour {
     public bool canAttack;
     public Vector3 position;
     public Monster target;
+
+    public Monster[] allMonsters;
     
 
     public bool isAdvanced;
     public Vector3 firstPosition;
 
     public Text impossibleActionText;
+
+    [Header("Attaque A - Options")]
+    public int costAttackA;
+    public float cooldownAttackA;
+    public int damageAttackA;
+    public float stunAttackA;
+
+    [Header("Attaque B - Options")]
+    public int costAttackB;
+    public float cooldownAttackB;
+    public int damageAttackB;
+    public float stunAttackB;
 
     // Use this for initialization
     void Start () {
@@ -44,6 +58,7 @@ public class Player : MonoBehaviour {
 	void Update () {
         healthImage.fillAmount = (float)((float)health / (float)healthMax);
         staminaImage.fillAmount = (float)((float)stamina / (float)staminaMax);
+        
     }
 
     public void getDamage(int damage)
@@ -70,6 +85,16 @@ public class Player : MonoBehaviour {
     {
         isAdvanced = false;
         transform.DOMove(firstPosition, 0.5f);
+    }
+
+    public void AttackA()
+    {
+        StartCoroutine(Attack(costAttackA, cooldownAttackA, damageAttackA, stunAttackA));
+    }
+
+    public void AttackB()
+    {
+        StartCoroutine(Attack(costAttackB, cooldownAttackB, damageAttackB, stunAttackB));
     }
 
     public IEnumerator Attack(int cost, float cooldown, int damage, float stunDuration)
