@@ -78,7 +78,13 @@ public class Player : MonoBehaviour {
     public void Advance()
     {
         isAdvanced = true;
-        transform.DOMove(GameObject.Find("Advanced").transform.position, 0.5f);
+        transform.DOMove(GameObject.Find("Advanced").transform.position, 0.5f).OnComplete(Zoom); ;
+    }
+
+    public void Zoom()
+    {
+        Camera.main.transform.DOLookAt(transform.position, 0.5f);
+        Camera.main.DOFieldOfView(35, 1f);
     }
 
     public void Back()
