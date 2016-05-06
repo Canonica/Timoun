@@ -34,7 +34,6 @@ public class TurnManager : MonoBehaviour {
 
     void Update()
     {
-        Debug.Log(whoPlays);
         currentTimeTurn -= Time.deltaTime;
         if (!isPlaying)
         {

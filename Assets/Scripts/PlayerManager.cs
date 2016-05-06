@@ -7,7 +7,7 @@ public class PlayerManager : MonoBehaviour {
     public Player advancedPlayer;
 
     public GameObject[] indicatorPlayer;
-    public Vector3 initialCamPosition = Camera.main.transform.position;
+    public Vector3 initialCamPosition ;
     bool isInCombo;
     // Use this for initialization
     void Start () {
@@ -17,10 +17,12 @@ public class PlayerManager : MonoBehaviour {
             indicatorPlayer[i].SetActive(false);
         }
         isInCombo = false;
-	}
+        initialCamPosition = Camera.main.transform.position;
+    }
 	
 	// Update is called once per frame
 	void Update () {
+        Debug.Log(isInCombo);
         if (Input.GetKey(KeyCode.G))
         {
             //Camera.main.DOFieldOfView(30, 1);
@@ -40,7 +42,7 @@ public class PlayerManager : MonoBehaviour {
 
         if (TurnManager.GetInstance().whoPlays == 0)
         {
-            if (Input.GetKey(KeyCode.A) || v > 0.4 && advancedPlayer == null)
+            if (Input.GetKey(KeyCode.A) || v > 0.4 && advancedPlayer == null )
             {
                 if (!players[0].isAdvanced)
                 {
@@ -74,7 +76,7 @@ public class PlayerManager : MonoBehaviour {
                 HideIndicators();
             }
 
-            if (triggerRight > 0.5f && selectedPlayer != null && !selectedPlayer.isAdvanced)
+            if (triggerRight > 0.5f && selectedPlayer != null && !selectedPlayer.isAdvanced )
             {
                 allBack();
                 selectedPlayer.isAdvanced = true;
@@ -103,7 +105,12 @@ public class PlayerManager : MonoBehaviour {
 
             if(Input.GetButtonDown("X_button_1") && advancedPlayer.isAdvanced && advancedPlayer.canAttack && !isInCombo)
             {
-                Combo();
+                StartCoroutine(MyCombo());
+            }
+
+            if (Input.GetButtonDown("A_button_1") && advancedPlayer.isAdvanced && advancedPlayer.canAttack && isInCombo)
+            {
+                advancedPlayer.AttackCombo();
             }
         }
     }
@@ -114,8 +121,9 @@ public class PlayerManager : MonoBehaviour {
         {
             players[i].Back();
         }
-        Camera.main.transform.DOLookAt(initialCamPosition, 0.5f);
-        Camera.main.DOFieldOfView(60, 1f);
+            Camera.main.transform.DOLookAt(initialCamPosition, 0.5f);
+            Camera.main.DOFieldOfView(60, 1f);
+        
     }
 
     void HideIndicators()
@@ -126,18 +134,16 @@ public class PlayerManager : MonoBehaviour {
         }
     }
 
-    void Combo()
+    IEnumerator MyCombo()
     {
         isInCombo = true;
         float timer = 1;
-        while(timer > 0)
+        while (timer > 0)
         {
             timer -= Time.deltaTime;
-            Debug.Log(timer);
-            if (Input.GetButtonDown("A_button_1"))
-            {
-                Debug.Log("mdr");
-            }
+            yield return new WaitForEndOfFrame();
         }
+        isInCombo = false;
+        yield break;
     }
 }

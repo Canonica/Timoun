@@ -40,6 +40,12 @@ public class Player : MonoBehaviour {
     public int damageAttackB;
     public float stunAttackB;
 
+    [Header("Attaque Combo - Options")]
+    public int costAttackC;
+    public float cooldownAttackC;
+    public int damageAttackC;
+    public float stunAttackC;
+
     // Use this for initialization
     void Start () {
         canAttack = true;
@@ -101,6 +107,11 @@ public class Player : MonoBehaviour {
     public void AttackB()
     {
         StartCoroutine(Attack(costAttackB, cooldownAttackB, damageAttackB, stunAttackB));
+    }
+
+    public void AttackCombo()
+    {
+        StartCoroutine(Attack(costAttackC, cooldownAttackC, damageAttackC, stunAttackC));
     }
 
     public IEnumerator Attack(int cost, float cooldown, int damage, float stunDuration)
